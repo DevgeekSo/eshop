@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Improved Responsive NavBar</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        .navbar {
+            background-color: #333;
+            color: white;
+        }
+
+        .navbar-top, .navbar-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo {
+            height: 40px;
+            margin-right: 10px;
+        }
+
+        .icons {
+            display: flex;
+            align-items: center;
+        }
+
+        .icon {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+            font-size: 20px;
+        }
+
+        .navbar-bottom {
+            background-color: #444;
+        }
+
+        .search-container {
+            display: flex;
+            align-items: center;
+            flex-grow: 1;
+            margin-left: 20px;
+        }
+
+        .search-bar {
+            padding: 5px;
+            border: none;
+            border-radius: 3px;
+            flex-grow: 1;
+        }
+
+        .search-button {
+            padding: 5px 10px;
+            border: none;
+            border-radius: 3px;
+            margin-left: 5px;
+            background-color: #555;
+            color: white;
+            cursor: pointer;
+        }
+
+        .menu {
+            display: flex;
+            gap: 20px;
+        }
+
+        .menu-item {
+            color: white;
+            text-decoration: none;
+        }
+
+        .hamburger, .close-icon {
+            display: none;
+            cursor: pointer;
+            font-size: 24px;
+        }
+
+        @media (max-width: 768px) {
+            .navbar-top {
+                justify-content: space-between;
+            }
+
+            .menu {
+                display: none;
+            }
+
+            .hamburger {
+                display: block;
+            }
+
+            .navbar-bottom {
+                flex-direction: row;
+                align-items: center;
+                width: 100%;
+            }
+
+            .search-container {
+                flex-grow: 1;
+                margin-left: 10px;
+                order: 2;
+            }
+
+            .navbar-bottom .hamburger {
+                order: 1;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .navbar.responsive .menu {
+                display: flex;
+                flex-direction: column;
+                width: 10%;
+                align-items: center;
+            }
+
+            .navbar.responsive .hamburger {
+                display: none;
+            }
+
+            .navbar.responsive .close-icon {
+                display: block;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-top">
+            <div class="logo-container">
+                <img src="logo.png" alt="Logo" class="logo">
+                <span class="logo-name">BrandName</span>
+            </div>
+            <div class="icons">
+                <a href="#" class="icon"><i class="fas fa-shopping-cart"></i></a>
+                <a href="#" class="icon"><i class="fas fa-user"></i></a>
+            </div>
+        </div>
+        <div class="navbar-bottom">
+            <div class="search-container">
+                <input type="text" class="search-bar" placeholder="Search...">
+                <button class="search-button">Search</button>
+            </div>
+            <div class="hamburger" onclick="toggleMenu()"><i class="fas fa-bars"></i></div>
+           
+            <div class="menu">
+                <a href="#" class="menu-item">Home</a>
+                <a href="#" class="menu-item">Products</a>
+                <a href="#" class="menu-item">Category</a>
+                <a href="#" class="menu-item">About</a>
+            </div>
+            <div class="close-icon" onclick="toggleMenu()"><i class="fas fa-times"></i></div>
+        </div>
+    </nav>
+    <script>
+        function toggleMenu() {
+            const navbar = document.querySelector('.navbar');
+            navbar.classList.toggle('responsive');
+        }
+    </script>
+</body>
+</html>

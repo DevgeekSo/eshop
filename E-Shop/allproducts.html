@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product Details</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+      margin-top: 20px;
+    }
+    #product-details-container {
+      width: 75%;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+    #product-details-content {
+      border: 1px solid #ddd;
+      padding: 20px;
+      box-sizing: border-box;
+      text-align: center;
+    }
+    img {
+      max-width: 100%;
+      height: auto;
+      max-height: 300px;
+      margin-bottom: 20px;
+    }
+    #customer-feedback {
+      margin-top: 20px;
+    }
+    #customer-feedback h3 {
+      text-align: center;
+    }
+    #comments-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+      margin-top: 10px;
+    }
+    .comment {
+      border: 1px solid #ddd;
+      padding: 10px;
+      margin: 10px;
+      box-sizing: border-box;
+      width: calc(45% - 20px);
+    }
+    #similar-products {
+      margin-top: 20px;
+    }
+    #similar-product-section {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+      margin-top: 10px;
+    }
+    .similar-product-card {
+      border: 1px solid #ddd;
+      padding: 10px;
+      margin: 10px;
+      box-sizing: border-box;
+      width: calc(30% - 20px);
+      text-align: center;
+      cursor: pointer;
+    }
+    #product-details-container button {
+      padding: 10px;
+      background-color: #ff0000;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+<div id="product-details-container">
+  <h2>Product Details</h2>
+  <div id="product-details-content">
+    <!-- Product details will be dynamically populated using JavaScript -->
+  </div>
+
+  <!-- Customer Feedback Section -->
+  <div id="customer-feedback">
+    <h3>Customer Feedback</h3>
+    <div id="comments-container">
+      <!-- Comments will be dynamically populated using JavaScript -->
+    </div>
+  </div>
+
+  <!-- Similar Products Section -->
+  <div id="similar-products">
+    <h2>Similar Products</h2>
+    <div id="similar-product-section">
+      <!-- Similar products will be dynamically populated using JavaScript -->
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    // Function to extract product ID from the URL
+    function getProductIdFromUrl() {
+      const queryString = window.location.search;
+      const urlParams = new URLSearchParams(queryString);
+      return urlParams.get('id');
+    }
+
+    const productId = getProductIdFromUrl();
+
+    // Placeholder for fetching the product details by ID
+    fetch(`https://fakestoreapi.com/products/${productId}`)
+      .then(response => response.json())
+      .then(productDetails => {
+        // Populate the product details on the page
+        const productDetailsContainer = document.getElementById('product-details-content');
+        productDetailsContainer.innerHTML = `
+          <img src="${productDetails.image}" alt="${productDetails.title}">
+          <h3>${productDetails.title}</h3>
+          <p>Category: ${productDetails.category} | Rating: ${productDetails.rating.rate}</p>
+          <p>Price: ${productDetails.price}$</p>
+          <p>${productDetails.description}</p>
+          <button onclick="buyNow()">BUY NOW</button>
+        `;
+
+        // Fetch and display customer feedback (comments)
+        fetchComments(productId);
+
+        // Fetch and display similar products
+        fetchSimilarProducts(productDetails.category);
+      });
+  });
+
+  // Function to fetch and display customer feedback (comments)
+  function fetchComments(productId) {
+    // Placeholder for fetching comments
+    // You should replace this with the actual API endpoint for fetching comments by product ID
+    fetch(`https://fakestoreapi.com/products/${productId}/comments`)
+      .then(response => response.json())
+      .then(comments => {
+        displayComments(comments);
+      });
+  }
+
+  // Function to display customer feedback (comments)
+  function displayComments(comments) {
+    const commentsContainer = document.getElementById('comments-container');
+    commentsContainer.innerHTML = '';
+
+    comments.forEach(comment => {
+      const commentElement = document.createElement('div');
+      commentElement.classList.add('comment');
+      commentElement.innerHTML = `
+        <p>${comment.comment}</p>
+        <p>Rating: ${comment.rating}</p>
+      `;
+      commentsContainer.appendChild(commentElement);
+    });
+  }
+
+  // Function to fetch and display similar products
+  function fetchSimilarProducts(category) {
+    // Placeholder for fetching similar products
+    // You should replace this with the actual API endpoint for fetching similar products by category
+    fetch(`https://fakestoreapi.com/products/category/${category}`)
+      .then(response => response.json())
+      .then(similarProducts => {
+        displaySimilarProducts(similarProducts);
+      });
+  }
+
+  // Function to display similar products
+  function displaySimilarProducts(similarProducts) {
+    const similarProductSection = document.getElementById('similar-product-section');
+    similarProductSection.innerHTML = '';
+
+    similarProducts.forEach(product => {
+      const card = document.createElement('div');
+      card.classList.add('similar-product-card');
+      card.innerHTML = `
+        <img src="${product.image}" alt="${product.title}">
+        <p>${product.title}</p>
+        <button onclick="showDetails(${product.id})">View Details</button>
+      `;
+      similarProductSection.appendChild(card);
+    });
+  }
+
+  // Function to handle the "BUY NOW" button click
+  function buyNow() {
+    // Implement the logic for handling the "BUY NOW" button click (e.g., redirect to a checkout page)
+    alert('Implement the logic for handling the "BUY NOW" button click.');
+  }
+
+  // Function to show product details
+  window.showDetails = function (productId) {
+    // Redirect to the product details page with the product ID as a query parameter
+    window.location.href = `product-details.html?id=${productId}`;
+  };
+</script>
+
+</body>
+</html>

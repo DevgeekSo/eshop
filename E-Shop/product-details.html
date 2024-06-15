@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            background-color: #f4f4f4;
+        }
+
+        header {
+            margin: 0px 0px;
+            padding: 0px 0px;
+            color: rgb(255, 255, 255);
+            padding: 1em;
+            display: block;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+
+        #logo {
+            font-size: 1.5em;
+            font-weight: bold;
+            display: flex;
+        }
+
+        #logo img {
+            padding: 1px;
+        }
+
+        #search-bar {
+            position: relative;
+            display: flex;
+            align-items: center;
+            width: 75%;
+            border-radius: 50px;
+        }
+
+        input[type="text"] {
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 15px;
+            height: 30px;
+            margin-right: 8px;
+            width: 100%;
+        }
+
+        #search-suggestions {
+            position: absolute;
+            top: 100%;
+            left: 0; /* Updated to align with the left */
+            width: 80%; /* Updated to match the width of the search bar */
+            background-color: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            z-index: 1;
+            color: #000;
+            max-height: 150px;
+            overflow-y: auto;
+            border-radius: 8px;
+            display: none;
+        }
+
+        .search-suggestion {
+            padding: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+        }
+
+        .search-suggestion img {
+            width: 30px;
+            height: 30px;
+            margin-right: 10px;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        button {
+            padding: 8px;
+            width: 200px;
+            background-color: #333;
+            color: white;
+            height: 45px;
+            border-radius: 15px;
+            cursor: pointer;
+        }
+
+        .menu ul {
+            margin-top: 15px;
+            gap: 70px;
+            justify-content: center;
+            display: flex;
+            margin-right: 60px;
+        }
+
+        .menu ul li a {
+            color: #ffffff;
+            font-weight: 600;
+        }
+
+        .menu ul li:hover {
+            transform: scale(1.5);
+            /* Zoom in by 10% on hover */
+        }
+
+        .menu ul li {
+            display: block;
+        }
+
+        nav {
+            background-color: rgb(255, 0, 0);
+            display: block;
+            align-items: center;
+            padding: 10px;
+            margin: -20px;
+            height: 130px;
+        }
+
+        nav a {
+            margin-right: 15px;
+            color: white;
+            text-decoration: none;
+        }
+
+        #cart-icon {
+            font-size: 1.2em;
+            color: white;
+            margin-left: 1200px;
+        }
+
+        #profile-icon {
+            font-size: 1.2em;
+            color: white;
+            margin-left: 80px;
+        }
+
+        .options {
+            display: flex;
+            gap: 50px;
+        }
+
+        #category-container {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px;
+        }
+
+        #left-section {
+            width: 25%;
+        }
+
+        .filter-section {
+            background-color: #f4f4f4;
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .filter-option {
+            margin-bottom: 15px;
+        }
+
+        .filter-option label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .filter-option select,
+        .filter-option input[type="range"] {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+
+        #right-section {
+            width: 75%;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .product-card {
+            width: calc(33.33% - 20px);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            background-color: rgb(255, 255, 255);
+            overflow: hidden;
+            transition: transform 0.3s ease;
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .product-card:hover {
+            transform: scale(1.05);
+        }
+
+        .product-card .details {
+            padding: 15px;
+            height: 260px;
+        }
+
+        .product-card .buttons {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 10px;
+            box-sizing: border-box;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .product-card .buttons button {
+            background-color: red;
+            color: white;
+            padding: 8px 12px;
+            border: none;
+            width: 48%;
+            border-radius: 5px;
+            cursor: pointer;
+            outline: none;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            max-height: 150px;
+            margin-bottom: 10px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        #cart-section {
+      position: fixed;
+      top: 0;
+      right: -300px;
+      height: 100%;
+      width: 300px;
+      background-color: #ffffff;
+      transition: right 0.3s ease-in-out;
+      overflow-y: auto;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+
+    .cart-product {
+      border: 1px solid #ffffff;
+      padding: 15px;
+      margin: 10px;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .remove-btn {
+      cursor: pointer;
+      color: red;
+      margin-top: 10px;
+    }
+
+    #cart-count {
+      display: none;
+      background-color: rgb(0, 0, 0);
+      color: white;
+      padding: 5px 8px; /* Adjusted padding for better appearance */
+      border-radius: 50%;
+      font-size: 12px;
+      margin-left: -8px; /* Adjusted margin for better positioning */
+      position: relative;
+      top: -10px; /* Adjusted top position for better alignment */
+    }
+
+    #close-icon {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      font-size: 20px;
+      cursor: pointer;
+    }
+
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <nav>
+            <div class="logo" id="logo">
+                <div id="logo-container">
+                    <img src="/img/Pink Magenta White Modern Online Shop Logo (1).png" width="50px" alt="">
+                    <span>eShop</span>
+                </div>
+                <div id="cart-icon" class="fas fa-shopping-cart"><span id="cart-count">0</span></div>
+                <span id="profile-icon"><i class="fa-regular fa-user"></i></span>
+            </div>
+
+            <div class="options">
+                <div id="search-bar">
+                    <input type="text" id="search-input" placeholder="Search...">
+                    <div id="search-suggestions"></div>
+                    <button id="bt">Search</button>
+                </div>
+                <div class="menu">
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="product-details.html">Category</a></li>
+                        <li><a href="#">MyOrder</a></li>
+                        <li><a href="#">Wishlist</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div id="category-container">
+        <div id="left-section">
+            <div class="filter-section">
+                <h2>Filters</h2>
+                <div class="filter-option">
+                    <label for="category-filter">Category:</label>
+                    <select id="category-filter">
+                        <option value="">All</option>
+                    </select>
+                </div>
+                <div class="filter-option">
+                    <label for="price-filter">Price Range:</label>
+                    <input type="range" id="price-filter" min="0" max="1000" step="10" value="500">
+                    <span id="price-value">$500</span>
+                </div>
+                <div class="filter-option">
+                    <label for="rating-filter">Minimum Rating:</label>
+                    <select id="rating-filter">
+                        <option value="0">No minimum rating</option>
+                        <option value="1">⭐</option>
+                        <option value="2">⭐⭐</option>
+                        <option value="3">⭐⭐⭐</option>
+                        <option value="4">⭐⭐⭐⭐</option>
+                        <option value="5">⭐⭐⭐⭐⭐</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div id="right-section"></div>
+    </div>
+
+    <div id="cart-section">
+        <div id="close-icon" class="fas fa-times"></div>
+        <h2>Shopping Cart</h2>
+        <div id="cart-products"></div>
+      </div>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
+    <script>
+        // Fetch products from fakestoreapi.com
+        fetch('https://fakestoreapi.com/products')
+            .then(response => response.json())
+            .then(products => {
+                const rightSection = document.getElementById('right-section');
+                const priceFilter = document.getElementById('price-filter');
+                const priceValue = document.getElementById('price-value');
+                const categoryFilter = document.getElementById('category-filter');
+                const ratingFilter = document.getElementById('rating-filter');
+                const searchInput = document.getElementById('search-input');
+                const searchSuggestions = document.getElementById('search-suggestions');
+                const cartIcon = document.getElementById('cart-icon');
+                const cartCount = document.getElementById('cart-count');
+                const cartSection = document.getElementById('cart-section');
+                const cartProducts = document.getElementById('cart-products');
+                const closeIcon = document.getElementById('close-icon');
+                let cart = []; // Initialize an empty array to store cart items
+    const cartCountElement = document.getElementById('cart-count');                // Function to create a product card
+                const createProductCard = (product) => {
+                    const card = document.createElement('div');
+                    card.classList.add('product-card');
+
+                    card.innerHTML = `
+                        <img src="${product.image}" alt="${product.title}">
+                        <div class="details">
+                            <h3>${product.title}</h3>
+                            <p>Category: ${product.category}</p>
+                            <p>Rating: ${product.rating.rate} (${product.rating.count} reviews)</p>
+                            <p>${product.price}$</p>
+                            <div class="buttons">
+                                <button class="buy-now-btn" onclick="buyNow('${product.title}', '${product.image}', '${product.price}')">Buy Now</button>
+                                <button class="add-to-cart-btn" onclick="addToCart('${product.title}')">Add to Cart</button>
+                            </div>
+                        </div>
+                    `;
+
+                    rightSection.appendChild(card);
+                    // Add event listener for the "Add to Cart" button
+          const addToCartBtn = card.querySelector('.add-to-cart-btn');
+          addToCartBtn.addEventListener('click', () => addToCart(product.title));
+                };
+
+                // Add product cards to the right section
+                products.forEach(product => {
+                    createProductCard(product);
+                });
+
+                // Add dynamic category options
+                const categories = [...new Set(products.map(product => product.category))];
+                categories.forEach(category => {
+                    const option = document.createElement('option');
+                    option.value = category.toLowerCase();
+                    option.textContent = category;
+                    categoryFilter.appendChild(option);
+                });
+
+                // Add event listeners for filters
+                priceFilter.addEventListener('input', () => {
+                    priceValue.innerText = `$${priceFilter.value}`;
+                    filterProducts();
+                });
+
+                categoryFilter.addEventListener('change', filterProducts);
+                ratingFilter.addEventListener('change', filterProducts);
+
+                    // Event listener for search input
+                        searchInput.addEventListener('input', () => {
+                            const searchTerm = searchInput.value.trim().toLowerCase(); // Trim and convert to lowercase
+                            if (searchTerm) {
+                                const suggestions = products.filter(product => product.title.toLowerCase().includes(searchTerm));
+                                displaySearchSuggestions(suggestions);
+                            } else {
+                                searchSuggestions.style.display = 'none';
+                            }
+                        });
+                        cartIcon.addEventListener('click', toggleCart);
+      closeIcon.addEventListener('click', toggleCart);
+
+      // Event listener to close cart when clicking outside
+      document.addEventListener('click', (event) => {
+        const cartSectionRect = cartSection.getBoundingClientRect();
+        const isClickInsideCart = (
+          event.clientX >= cartSectionRect.left &&
+          event.clientX <= cartSectionRect.right &&
+          event.clientY >= cartSectionRect.top &&
+          event.clientY <= cartSectionRect.bottom
+        );
+
+        if (!isClickInsideCart && cartSection.style.right === '0') {
+          toggleCart();
+        }
+      });
+// Function to show/hide cart
+function toggleCart() {
+        if (cartSection.style.right === '-300px') {
+          cartSection.style.right = '0';
+        } else {
+          cartSection.style.right = '-300px';
+        }
+        updateCartProducts();
+      }
+
+      // Function to add product to cart
+      function addToCart(productTitle) {
+        const selectedProduct = products.find(product => product.title === productTitle);
+        cart.push(selectedProduct);
+        updateCartCount();
+        updateCartProducts();
+    }
+
+    function updateCartCount() {
+        const count = cart.length;
+        cartCountElement.textContent = count;
+
+        // Show the cart count only if it's greater than 0
+        cartCountElement.style.display = count > 0 ? 'inline' : 'none';
+    }
+      // Function to update cart products
+      function updateCartProducts() {
+        cartProducts.innerHTML = '';
+
+        if (cart.length === 0) {
+          cartProducts.innerHTML = '<p>No items in the cart</p>';
+        } else {
+          cart.forEach((product, index) => {
+            const cartProduct = document.createElement('div');
+            cartProduct.classList.add('cart-product');
+            cartProduct.innerHTML = `
+              <img src="${product.image}" alt="${product.title}" style="max-width: 60px; max-height: 60px;">
+              <div>
+                <p>${product.title}</p>
+                <p>${product.price}$</p>
+                <span>Rating: ${product.rating.rate}</span>
+              </div>
+              <span class="remove-btn" onclick="removeFromCart(${index})">Remove</span>
+            `;
+            cartProducts.appendChild(cartProduct);
+          });
+        }
+      }
+
+      // Function to remove product from cart
+      window.removeFromCart = function (index) {
+        cart.splice(index, 1);
+        updateCartCount();
+        updateCartProducts();
+      };
+      // Function to show product details
+      window.showDetails = function (productId) {
+        // Redirect to the product details page with the product ID as a query parameter
+        window.location.href = `checkout.html?id=${productId}`;
+      };
+
+             // Function to display search suggestions
+            const displaySearchSuggestions = (suggestions) => {
+                searchSuggestions.innerHTML = '';
+
+                if (suggestions.length > 0) {
+                    suggestions.forEach(suggestion => {
+                        const suggestionElement = document.createElement('div');
+                        suggestionElement.classList.add('search-suggestion');
+                        suggestionElement.innerHTML = `
+                            <img src="${suggestion.image}" alt="${suggestion.title}">
+                            <span>${suggestion.title}</span>
+                        `;
+                        suggestionElement.addEventListener('click', () => {
+                            searchInput.value = suggestion.title;
+                            searchSuggestions.style.display = 'none';
+                            // You can also trigger a search or navigate to the product page here
+                        });
+
+                        searchSuggestions.appendChild(suggestionElement);
+                    });
+                    searchSuggestions.style.display = 'block';
+                } else {
+                    // Display a message when no products are found
+                    const noResultsMessage = document.createElement('div');
+                    noResultsMessage.textContent = 'No products found.';
+                    noResultsMessage.classList.add('search-suggestion', 'no-results');
+                    searchSuggestions.appendChild(noResultsMessage);
+                    searchSuggestions.style.display = 'block';
+                }
+            };
+
+                // Function to filter products based on selected filters
+                function filterProducts() {
+                    const filteredProducts = products.filter(product => {
+                        const price = parseInt(product.price, 10);
+                        const selectedCategory = categoryFilter.value;
+                        const selectedRating = parseInt(ratingFilter.value, 10);
+
+                        const priceCondition = price <= parseInt(priceFilter.value, 10);
+                        const categoryCondition = selectedCategory === '' || product.category === selectedCategory;
+                        const ratingCondition = selectedRating === 0 || product.rating.rate >= selectedRating;
+
+                        return priceCondition && categoryCondition && ratingCondition;
+                    });
+
+                    // Clear existing product cards
+                    rightSection.innerHTML = '';
+
+                    // Add filtered product cards to the right section
+                    filteredProducts.forEach(product => {
+                        createProductCard(product);
+                    });
+                }
+
+                // Sample functions for Buy Now and Add to Cart buttons (replace with actual functionality)
+                function showDetails(productId) {
+                    alert(`Show details for product with ID ${productId}`);
+                }
+
+            })
+            .catch(error => console.error('Error fetching products:', error));
+          // Function to handle "Buy Now" button click
+function buyNow(name, image, price) {
+    // Store product details in sessionStorage (you can also use localStorage or other methods)
+    sessionStorage.setItem('productName', name);
+    sessionStorage.setItem('productImage', image);
+    sessionStorage.setItem('productprice', price);
+
+    // Redirect to the checkout page
+    window.location.href = 'checkout.html';
+}
+
+
+            // Function to handle "Add to Cart" button click (if needed)
+          
+            // Function to handle click events on product cards
+      function handleProductCardClick(product) {
+        // Redirect to the product details page with the product information
+        window.location.href = `allproducts.html?id=${product.id}`;
+      }
+            
+          // Add event listeners for the card click
+          card.addEventListener('click', () => handleProductCardClick(product));
+          productSection.appendChild(card);
+          
+            </script>
+
+</body>
+
+</html>

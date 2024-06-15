@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css">
+    <title>Your E-Commerce Store</title>
+    <style>
+        *
+        * {
+    box-sizing: border-box;
+    margin: 0px;
+    padding: 0px;
+  }
+  body {
+    font-family: Arial, sans-serif;
+  }nav {
+        background: rgb(0, 0, 0);
+        color: rgb(255, 255, 255);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+  }
+  nav .mainMenu {
+    display: flex;
+    list-style: none;
+  }
+  nav .mainMenu li a {
+    display: inline-block;
+    padding: 15px;
+    text-decoration: none;
+    text-transform: uppercase;
+    color: rgb(255, 255, 255);
+    font-size: 18px;
+    transition: 0.2s ease;
+  }
+  nav .mainMenu li a:hover {
+    background: rgb(255, 94, 0);
+  }
+  nav .openMenu {
+    font-size: 2rem;
+    margin: 20px;
+    display: none;
+    cursor: pointer;
+  }
+  nav .mainMenu .closeMenu,
+  .icons i {
+    font-size: 1.5rem;
+    display: none;
+    cursor: pointer;
+  }
+  .fa-facebook:hover {
+    color: rgb(0, 110, 255);
+  }
+  .fa-twitter:hover {
+    color: rgb(86, 154, 243);
+  }
+  .fa-instagram:hover {
+    color: rgb(255, 0, 191);
+  }
+  .fa-github:hover {
+    color: rgb(255, 123, 0);
+  }
+  nav .logo {
+    margin: 6px;
+    cursor: pointer;
+    text-transform: uppercase;
+  }
+  @media (max-width: 800px) {
+    nav .mainMenu {
+      height: 100vh;
+      position: fixed;
+      top: 0px;
+      right: 0px;
+      left: 0px;
+      z-index: 10;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background: rgb(0, 0, 0);
+      transition: top 1s ease 0s;
+      display: none;
+    }
+    nav .mainMenu .closeMenu {
+      display: block;
+      position: absolute;
+      top: 20px;
+      right: 20px;
+    }
+    nav .openMenu {
+      display: block;
+    }
+    nav .mainMenu li a:hover {
+      background: none;
+      color: rgb(255, 123, 0);
+    }
+    .icons i {
+      display: inline-block;
+      padding: 12px;
+    }
+  }
+        header {
+            margin: 0px 0px;
+            padding: 0px 0px;
+            color: white;
+            padding: 1em;
+            display: block;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+
+        #logo {
+            font-size: 1.5em;
+            font-weight: bold;
+            display: flex;
+        }
+        #logo img
+        {
+        padding: 1px;
+    }
+
+        #search-bar {
+            display: flex;
+            align-items: center;
+            width: 75%;
+            border-radius: 50px;
+        }
+
+        input[type="text"] {
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 15px;
+            height: 45px;
+            margin-right: 8px;
+            width: 600px;
+        }
+
+        button {
+            padding: 8px;
+            width: 200px;
+            background-color: #333;
+            color: white;
+            height: 45px;
+            border-radius: 15px;
+            cursor: pointer;
+        }
+        .menu ul {
+            margin-top: 15px;
+            gap: 70px;
+            justify-content: center;
+            display: flex;
+            margin-right: 60px;
+        }
+
+        .menu ul li a {
+            color: #ffffff;
+            font-weight: 600;
+        }
+        .menu ul li :hover {
+            transform: scale(1.5); /* Zoom in by 10% on hover*/
+        }
+        .menu ul li {
+            display: block;
+        }
+
+      
+        #cart-icon {
+            font-size: 1.2em;
+            color: white;
+            margin-left: 1200px;
+        }
+
+        #profile-icon {
+            font-size: 1.2em;
+            color: white;
+            margin-left: 80px;
+        }
+
+        .options {
+            display: flex;
+            gap: 50px;
+        }
+        .list{ 
+            width: 100%;
+            background-color: #ffffff;
+        }
+        .list li a ::after
+        {
+            text-underline-offset:87px;
+            color: #000;
+        }
+        .list ul {
+            display: flex;
+            gap: 100px;
+            overflow-x: auto;
+            justify-content: center;
+            padding: 20px;
+            margin-top: 100px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .list ul li {
+            text-align: center;
+            
+        }
+
+        .list ul li a {
+            text-decoration: none;
+            color: #000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .list ul li img {
+            width: 110px; /* Adjust the width of the circular image */
+            height: 110px; /* Adjust the height of the circular image */
+            object-fit:fill;
+            border-radius: 100%;
+            margin-bottom: 10px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+        }
+        .list ul li img:hover
+        {
+                transform: scale(1.05); /* Zoom in by 10% on hover */
+                border-radius: 100%;
+                border:45px;
+                border-color: #fb6969;
+                width: 110px; /* Adjust the width of the circular image */
+                height: 110px; /* Adjust the height of the circular image */   
+                color: #000000;
+        }
+        
+        main {
+            width: 100%;
+            
+            justify-content: center;
+            align-items: center;
+        }
+        #category-list {
+            display: block;
+            justify-content:space-between;
+            margin: 20px 0;
+            padding: 0 20px;
+
+        }
+
+        .category {
+            flex: 0 0 18%;
+            background-color: white;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            width: 100%;
+            height: 50%;
+            border-radius: 8px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .category h2 {
+            margin-top: 20px;
+            margin-bottom: 20px;
+            color: #ffffff;
+            background-color: rgb(255, 0, 0);
+            width: 100%;
+            border-radius: 20px;
+
+        }
+
+        .category img {
+            /* width: 100%;
+            max-width: 200px; Adjust the max-width as needed */
+            border-radius: 4px;
+            margin-bottom: 8px;
+        }
+
+        .category u4, .category u5, .category u6, .category u7, .category u8 {
+            width: 100%;
+            display: flex;
+            overflow-x: auto;
+            list-style: none;
+            text-decoration: none;
+            justify-content: center;
+            gap: 50px;
+        }
+
+        .category u4 li a,
+        .category u5 li a,
+        .category u6 li a,
+        .category u7 li a,
+        .category u8 li a {
+            color: #000;
+            text-decoration: none;
+            align-items: center;
+            text-align: center;
+            font-weight: 600;
+            justify-self: center;
+        }
+
+.card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 10px;
+    width: 100%;
+    text-align: center;
+    transition: transform 0.3s ease; /* Add transition for a smooth zoom effect on the card */
+}
+
+.card:hover {
+    transform: scale(1.1); /* Zoom in by 10% on hover */
+    background-color: #fb6969;
+    color: #fffbfb;
+}
+
+      .container {
+            margin-top: 0%;
+            width: 100%;
+            height: 5%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .swiper {
+            width: 80%;
+            height: fit-content;
+           
+        }
+
+        .swiper-slide img {
+            width: 100%;
+        }
+
+        .swiper .swiper-button-prev,
+        .swiper .swiper-button-next {
+            color: rgb(255, 253, 253);
+        }
+
+        .swiper .swiper-pagination-bullet-active {
+            background: white;
+        }
+        *{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.footer
+{
+    background-color: #002bd8d6;
+}
+
+.containers{
+    max-width: 1170px;
+    
+    margin: auto;
+}
+.rows
+{
+    display: flex;
+    flex-wrap:wrap ;
+}
+u9
+{
+    list-style: none;
+}
+.footer{
+    margin-top: 100px;
+    background-color:#090e22d6;
+    padding: 70px 0;
+}
+.footer-col{
+    width: 25%;
+    padding: 0 15px;
+}
+.footer-col h4
+{font-size: 18px;
+    color: aliceblue;
+    text-transform: capitalize;
+    margin-bottom:35px ;
+    font-weight: 500;
+    position: relative;
+    
+
+
+}
+.footer-col h4::before{
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -10px;
+    background-color:#e91e63 ;
+    height: 2px;
+    box-sizing: border-box;
+    width: 50px;
+
+}
+.footer-col u9 li:not(:last-child){
+    margin-bottom: 10px;
+}
+.footer-col u9 li a{
+    font-size: 16px;
+    text-transform: capitalize;
+    color: #ffffff;
+    text-decoration:none ;
+    font-weight: 300;
+    color: #bbbbbb ;
+    display: block;
+    transition: all 0.3s ease;
+}
+.footer-col u9 li a:hover{
+    color:#ffffff ;
+    padding-left:8px; ;
+}
+.footer-col .social-links a{
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+    background-color: rgba(255,255,255,0.2);
+    margin: 0 10px 10px 0;
+    text-align: center;
+    line-height: 40px;
+    border-radius: 50%;
+    color: #ffffff;
+    transition: all 0.5s ease;
+}
+.footer-col .social-links a:hover{
+    color:#24262b ;
+    background-color:#ffffff;
+}
+@media(max-width:767px)
+{
+    .footer-col{
+        width: 50%;
+        margin-bottom: 30px;
+    }
+}
+@media(max-width:574px)
+{
+    .footer-col{
+        width: 50%;
+        margin-bottom: 30px;
+    }
+    
+    .nav .logo, .menu-list {
+      float: none;
+      text-align: center;
+    }
+}
+
+    @media (max-width: 480px) {
+        .footer-col{
+        width: 50%;
+        margin-bottom: 30px;
+    }
+
+        .footer-col h4::before {
+            width: 30px;
+        }
+        .list ul li img {
+            width: 50px; /* Adjust the width of the circular image */
+            height: 50px; /* Adjust the height of the circular image */
+            object-fit:fill;
+            border-radius: 100%;
+            margin-bottom: 1px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+        }
+        .list ul {
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            font-size: xx-small;
+            justify-content: center;
+            padding: 20px;
+            margin: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .list{
+            width: 100%;
+            background-color: #ffffff;
+            margin-top: 100px;
+        }
+    
+        .list ul li img:hover
+        {
+                transform: scale(1.05); /* Zoom in by 10% on hover */
+                border-radius: 100%;
+                border:45px;
+                border-color: #fb6969;
+                width: 60px; /* Adjust the width of the circular image */
+                height: 60px; /* Adjust the height of the circular image */   
+                color: #000000;
+        }
+        .category u4, .category u5, .category u6, .category u7, .category u8 {
+            width: 100%;
+            display: flex;
+            overflow-x: auto;
+            list-style: none;
+            text-decoration: none;
+            justify-content: center;
+            gap: 5px;
+        }
+
+        .category u4 li a,
+        .category u5 li a,
+        .category u6 li a,
+        .category u7 li a,
+        .category u8 li a {
+            color: #000;
+            text-decoration: none;
+            align-items: center;
+            text-align: center;
+            font-weight: 600;
+            justify-self: center;
+        }
+        .category img {
+            /* width: 100%;
+            max-width: 200px; Adjust the max-width as needed */
+            border-radius: 4px;
+            margin-bottom: 8px;
+            width: 50px;
+            height: 30px;
+        }
+            
+    }
+    
+    </style>
+</head>
+<body>
+
+<header>
+
+    <nav>
+        <div class="logo"><h1>eshop</h1>
+          <span id="cart-icon"><i class="fa-solid fa-cart-shopping"></i></span>
+          <span id="profile-icon"><i class="fa-regular fa-user"></i></span></div>
+        <div class="openMenu"><i class="fa fa-bars"></i></div>
+        <ul class="mainMenu">
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Products</a></li>
+            <li><a href="#">Contact</a></li>
+            <li><a href="#">About</a></li>
+            <div class="closeMenu"><i class="fa fa-times"></i></div>
+            <span class="icons">
+                <i class="fab fa-facebook"></i>
+                <i class="fab fa-instagram"></i>
+                <i class="fab fa-twitter"></i>
+                <i class="fab fa-github"></i>
+            </span>
+        </ul>
+      </nav>
+    
+    <div class="list">
+        <ul>
+            <li>
+                <a href="#">
+                    <img src="img/download (5).png" alt="Top Offers">
+                    <span>Top Offers</span>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <img src="img/download (4).png" width="500px" alt="Mobile & Tablets">
+                    <span>Mobile & Tablets</span>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <img src="img/download (1).png" alt="Electronics">
+                    <span>Electronics</span>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <img src="img/Daco_5865810.png" alt="Home Appliances">
+                    <span>Home Appliances</span>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <img src="img/download (2).png" alt="Fashions & Grooming">
+                    <span>Fashions & Grooming</span>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <img src="img/download (3).png" alt="Grocery">
+                    <span>Grocery</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+</header>
+        <div class="container">
+            <!-- Slider main container -->
+            <div class="swiper">
+                <!-- Additional required wrapper -->
+                <div class="swiper-wrapper">
+                    <!-- Slides -->
+                    <div class="swiper-slide"><img src="img/Bottom-image-iPhone-14-Available.jpg"></div>
+                    <div class="swiper-slide"><img src="img/Screenshot 2022-12-19 193322.png"></div>
+                    <div class="swiper-slide"><img src="img/a121efb8e0f5fd41946e73b29b8aafe3.jpg"></div>
+                    <div class="swiper-slide"><img src="img/HP_1_Year_Care_Pack_for_X360_Series_from_The_Peripheral_Store-Banner1_6a2f3de3-ce5c-4c98-b3cc-12a9c04a3a14.webp"></div>
+                </div>
+                <!-- If we need pagination -->
+                <div class="swiper-pagination"></div>
+
+                <!-- If we need navigation buttons -->
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-button-next"></div>
+            </div>
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
+        <script>
+            const mainMenu = document.querySelector('.mainMenu');
+const closeMenu = document.querySelector('.closeMenu');
+const openMenu = document.querySelector('.openMenu');
+const menu_items = document.querySelectorAll('nav .mainMenu li a');
+
+openMenu.addEventListener('click',show);
+closeMenu.addEventListener('click',close);
+
+// close menu when you click on a menu item 
+menu_items.forEach(item => {
+    item.addEventListener('click',function(){
+        close();
+    })
+})
+
+function show(){
+    mainMenu.style.display = 'flex';
+    mainMenu.style.top = '0';
+}
+function close(){
+    mainMenu.style.top = '-100%';
+}
+
+// subscribe to my channel : https://www.youtube.com/channel/UCfCOsSNqcNRkiviaHH5vnrQ
+        </script>
+<main>
+ 
+    <div id="category-list">
+        <!-- Mobile&Tablets Category -->
+        <div class="category">
+            <h2>Mobile&Tablets</h2>
+            <u4>
+                <li>
+                    <div class="card">
+                        <img src="img/Realme-realme-_logo_box-RGB-01.png" width=100px alt="Realme">
+                        <p>Realme</p>
+                    </div>
+                </li>
+                <li>
+                    <div class="card">
+                        <img src="img/download (6).png" width=80px alt="MI">
+                        <p>MI</p>
+                    </div>
+                </li>
+                <li>
+                    <div class="card">
+                        <img src="img/Samsung_logo_blue.png" width=135px alt="SAMSUNG">
+                        <p>SAMSUNG</p>
+                    </div>
+                </li>
+                <li>
+                    <div class="card">
+                        <img src="img/download (7).png" width=160px alt="OPPO">
+                        <p>OPPO</p>
+                    </div>
+                </li>
+                <li>
+                    <div class="card">
+                        <img src="img/download (8).png" width=220px alt="MICROMAX">
+                        <p>MICROMAX</p>
+                    </div>
+                </li>
+                <li>
+                    <div class="card">
+                        <img src="img/download (9).png" width=150px alt="LAVA">
+                        <p>LAVA</p>
+                    </div>
+                </li>
+            </u4>
+        </div>
+
+        <!-- Electronics Category -->
+        <div class="category">
+            <h2>Electronics</h2>
+            <u5>
+                <li>
+                    <div class="card">
+                        <img src="img/9oRuDc-refreshed-pavilion-gaming-series-launching-next-month.png" width=200px
+                            alt="Laptop">
+                        <p>Laptop</p>
+                    </div>
+                </li>
+                <li>
+                    <div class="card">
+                        <img src="img/Full-HD-LED-TV-PNG-Image.png" width=285px alt="Television">
+                        <p>Television</p>
+                    </div>
+                </li>
+                <li>
+                    <div class="card">
+                        <img src="img/667.png" width=170px alt="Camera">
+                        <p>Camera</p>
+                    </div>
+                </li>
+                <li>
+                    <div class="card">
+                        <img src="img/Audio-Speaker-PNG-Free-Download.png" width=210px alt="Speaker">
+                        <p>Speaker</p>
+                    </div>
+                </li>
+                <li>
+                    <div class="card">
+                        <img src="img/Smartwatch-PNG-Image.png" width=175 alt="Watch">
+                        <p>Watch</p>
+                    </div>
+                </li>
+            </u5>
+        </div>
+
+        <!-- Home Appliances Category -->
+        <div class="category">
+            <h2>Home Appliances</h2>
+            <u6>
+                <li>
+                    <div class="card">
+                        <img src="img/2cd43b_3c1c1d30b99343acb96ba81a81021ed8_mv2.png" width=150px alt="Refrigerator">
+                        <p>Refrigerator</p>
+                    </div>
+                </li>
+                <li>
+                    <div class="card">
+                        <img src="img/Washing-Machine-PNG-Photos.png" width=130px alt="Washing Machine">
+                        <p>Washing Machine</p>
+                    </div>
+                </li>
+                <li>
+                    <div class="card">
+                        <img src="img/gas_stove_PNG68.png" width=300px alt="Stove">
+                        <p>Stove</p>
+                    </div>
+                </li>
+                <li>
+                    <div class="card">
+                        <img src="img/microwave_PNG15735.png" width=200px alt="Microwave">
+                        <p>Microwave</p>
+                    </div>
+                </li>
+                <li>
+                    <div class="card">
+                        <img src="img/vacuum_cleaner_PNG51.png" width=175px alt="Vaccum Cleaner">
+                        <p>Vaccum Cleaner</p>
+                    </div>
+                </li>
+            </u6>
+        </div>
+
+        <!-- Fashion & Grooming Category -->
+        <div class="category">
+            <h2>Fashion & Grooming</h2>
+            <u7>
+                <li>
+                    <div class="card">
+                        <img src="img/sand.png" width=140px alt="MEN FASHION">
+                        <p>MEN FASHION</p>
+                    </div>
+                </li>
+                <li>
+                    <div class="card">
+                        <img src="img/download (14).png" width=125 alt="WOMEN FASHION">
+                        <p>WOMEN FASHION</p>
+                    </div>
+                </li>
+                <li>
+                    <div class="card">
+                        <img src="img/baby_PNG51744.png" width=190px alt="KIDS FASHION">
+                        <p>KIDS FASHION</p>
+                    </div>
+                </li>
+                <li>
+                    <div class="card">
+                        <img src="img/Philips-Beard-Trimmer-Transparent-PNG.png" width=140px alt="TRIMMERS">
+                        <p>TRIMMERS</p>
+                    </div>
+                </li>
+                <li>
+                    <div class="card">
+                        <img src="img/Hair Straightener Png Free Download - 1800x1600.png" width=155 alt="Hair straightener">
+                        <p>Hair straightener</p>
+                    </div>
+                </li>
+                <li>
+                    <div class="card">
+                        <img src="img/Hairdryer-PNG-Image-Background.png" width=140 alt="Hair Dryers">
+                        <p>Hair Dryers</p>
+                    </div>
+                </li>
+            </u7>
+        </div>
+
+        <!-- Grocery Category -->
+        <div class="category">
+            <h2>Grocery</h2>
+            <u8>
+                <li>
+                    <div class="card">
+                        <img src="img/download (11).png" width=260px alt="Snacks">
+                        <p>Snacks</p>
+                    </div>
+                </li>
+                <li>
+                    <div class="card">
+                        <img src="img/download (12).png" width=215 alt="Masalaes">
+                        <p>Masalaes</p>
+                    </div>
+                </li>
+                <li>
+                    <div class="card">
+                        <img src="img/Dry-Fruit-Healthy-Snack-PNG-Photos.png" width=270 alt="Drys Fruits">
+                        <p>Drys Fruits</p>
+                    </div>
+                </li>
+                <li>
+                    <div class="card">
+                        <img src="img/home-products.png" width=305px alt="Dairys">
+                        <p>Dairys</p>
+                    </div>
+                </li>
+                <li>
+                    <div class="card">
+                        <img src="img/download (13).png" width=110 alt="Household">
+                        <p>Household</p>
+                    </div>
+                </li>
+            </u8>
+        </div>
+    </div>
+</main>
+
+<footer class="footer">
+    <div class="containers">
+      <div class="rows">
+      <div class="footer-col">
+      <h4>company</h4>
+      <u9>
+        <li><a href="#">about us</a></li>
+        <li><a href="#">our services</a></li>
+        <li><a href="#">privacy policy</a></li>
+        <li><a href="#">affiliate program</a></li>
+      </u9>
+    </div>
+    <div class="footer-col">
+    <h4>get help</h4>
+    <u9>
+      <li><a href="#">FAQ</a></li>
+      <li><a href="#">shipping</a></li>
+      <li><a href="#">return</a></li>
+      <li><a href="#">order status</a></li>
+      <li><a href="#">payment options</a></li>
+    </u9>
+  </div>
+  <div class="footer-col">
+  <h4>online shop</h4>
+  <u9>
+    <li><a href="#">watch</a></li>
+    <li><a href="#">bag</a></li>
+    <li><a href="#">shoes</a></li>
+    <li><a href="#">dress</a></li>
+  </u9>
+  </div>
+  <div class="footer-col">
+  <h4>follow us</h4>
+  <div class="social-links">
+  <u9>
+    <a href="#"><i class="fab fa-facebook"></i></a>
+    <a href="#"><i class="fab fa-twitter"></i></a>
+    <a href="#"><i class="fab fa-instagram"></i></a>
+    <a href="#"><i class="fab fa-linkedin"></i></a>
+    <a href="#"><i class="fab fa-whatsapp"></i></a>
+    
+    
+  </u9>  
+</div>
+  </footer>
+  
+</body>
+</html>
